@@ -60,7 +60,7 @@ DATABASES = {
         'CLIENT': {
             'host': 'mongodb://54.82.35.93:27017',
             'username': 'root',
-            'password': '1234',
+            'password': 1234,
             'authSource': 'admin',  # or specific database name for authentication
         }
     }
