@@ -1,0 +1,6 @@
+{% if user.is_authenticated %}
+    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+{% endif %}

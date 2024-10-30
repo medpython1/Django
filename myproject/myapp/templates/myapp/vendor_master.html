@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add vendor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #536ce6;
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            text-align: center;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            display: block;
+        }
+/*on corser move*/
+        .sidebar a:hover {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        /*
+
+        /* Main content area */
+        .main-content {
+            flex-grow: 1;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+        .styled-table {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px; /* Padding won't work on <table>, so apply it inside cells */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        border-collapse: separate;
+        border-spacing: 0; /* Ensures borders don't collapse, works well with rounded corners */
+        
+        
+    }
+    
+    .styled-table th, .styled-table td {
+        padding: 20px; /* This adds space inside table cells */
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .styled-table th {
+        font-weight: bold;
+    }
+
+    .styled-table tr:last-child td {
+        border-bottom: none; /* Removes bottom border for the last row */
+    }
+
+    .styled-table {
+        border-radius: 8px;
+        overflow: hidden; /* Ensures border-radius affects entire table */
+    }
+    /* Alert Message with Time code in */
+.alert-box {
+  padding: 15px;
+  background-color: #28a745;
+  color: #f3eded;
+  border-radius: 5px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;  /* Smooth fade-out */
+  animation: fadeout 1s forwards;     /* Start fade-out after 5 seconds */
+}
+
+/* CSS animation to fade out */
+@keyframes fadeout {
+  0% { opacity: 1; }
+  80% { opacity: 1; }  /* Stay visible for most of the duration */
+  100% { opacity: 0; } /* Fade out completely by the end */
+}
+    
+    
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Dashboard</h1>
+        <h3><a href="http://127.0.0.1:8000/dashboard/">Home</a></h3>
+        <h3><a href="http://127.0.0.1:8000/vendor_list/">Add Vendor</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate/">Bill Generate</a></h3>
+        <h3><a href="http://127.0.0.1:8000/get_bill_list/">Bill List</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate_qua/" >Quatation</a></h3>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <div class="navbar">
+            <h1>ADD New Unit</h1>
+        </div>
+        <!-- <h1>Add New Books</h1> -->
+    {% if messages %}
+    <div class="alert-box alert-success">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        <form action="{% url 'vendor_master' %}" method="post">
+            {% csrf_token %}
+            <div class="main-content">
+                <table class="styled-table" style="width: 100%;">
+                    <tr>
+                        <th style="width: 20%;"><label for="company_name">Company Name:</label></th>
+                        <td><input type="text" id="company_name" name="company_name" style="width: 500px; height: 80px;" required></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;"><label for="company_address">Company Address:</label></th>
+                        <td><input type="text" id="company_address" name="company_address" style="width: 500px; height: 80px;"></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;"><label for="city">City:</label></th>
+                        <td><input type="text" id="city" name="city" style="width: 500px; height: 80px;"></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;"><label for="state">State:</label></th>
+                        <td><input type="text" id="state" name="state" style="width: 500px; height: 80px;"></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;"><label for="pincode">Pincode:</label></th>
+                        <td><input type="number" id="pincode" name="pincode" style="width: 500px; height: 80px;"></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;"><label for="gst">GST Number:</label></th>
+                        <td><input type="text" id="gst" name="gst" style="width: 500px; height: 80px;"></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;"><label for="phone_number">Phone Number:</label></th>
+                        <td><input type="text" id="phone_number" name="phone_number" style="width: 500px; height: 80px;"></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <h1><input type="submit" value="Add Book"   style="font-size: 18px; background-color: #536ce6; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></h1>
+            </div>
+        </form>
+        <script type="text/javascript">
+            window.history.forward();
+            function noBack() {
+                window.history.forward();
+            }
+        </script>
+        
+    </div>
+</body>
+</html>

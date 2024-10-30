@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Create</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #536ce6;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 20px 0;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+
+        .styled-table {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-spacing: 0;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+
+
+        .styled-table th, .styled-table td {
+            padding: 12px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .styled-table th {
+            background-color: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .styled-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .alert-box {
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+            animation: fadeout 5s forwards;
+        }
+
+        @keyframes fadeout {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .form-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"], input[type="date"],input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="submit"] {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #536ce6;
+        }
+        .container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 0px;
+            margin-bottom: 10px;   
+        }
+        select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+        
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h1>Dashboard</h1>
+        <h3><a href="http://127.0.0.1:8000/dashboard/">Home</a></h3>
+        <h3><a href="http://127.0.0.1:8000/vendor_list/">Add Vendor</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate/">Bill Generate</a></h3>
+        <h3><a href="http://127.0.0.1:8000/get_bill_list/">Bill List</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate_qua/" >Quotation</a></h3>
+        <h3><a href="http://127.0.0.1:8000/register/" >User</a></h3>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div style="text-align: right;">
+            <form method="POST" action="{% url 'logout' %}" style="margin-top: 20px;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #536ce6; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; ">
+                    Logout
+                </button>
+            </form>
+        </div>
+        <!-- Navbar -->
+        <div class="navbar">
+            <h2>User Create</h2>
+        </div>
+        
+
+        <!-- Form Section for User Registration -->
+        <div class="split-top">
+            <form method="POST" >
+                {% csrf_token %}
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="background-color:  #536ce6; color: white;"><label for="username">Username:</label></th>
+                            <th style="background-color:  #536ce6; color: white;"><label for="email">Email:</label></th>
+                            <th style="background-color:  #536ce6; color: white;"><label for="role">Password:</label></th>
+                            <th style="background-color:  #536ce6; color: white;"><label for="role">Confirm Password:</label></th>
+                            <th style="background-color:  #536ce6; color: white;"><label for="role">Role:</label></th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="productRows"></tbody>
+                        <tr>
+                            
+                            <td><input type="text" name="username"></td>
+
+                            
+                            <td><input type="text" name="email"></td>
+
+                            
+                            <td><input type="password" name="password"></td>
+
+                            
+                            <td><input type="password" name="confirm_password"></td>
+
+                            <td>
+                                <select name="role">
+                                    <option value="--select--">--Select--</option>
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="text-align: right;">
+                    <button type="submit" name="register_view" style="font-size: 18px; background-color: #536ce6; color: white; padding: 10px 20px; border: none; border-radius: 5px;">SAVE</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- User List Section -->
+        <div class="split-bottom">
+            <table class="styled-table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="background-color:  #536ce6; color: white;">User name</th>
+                        <th style="background-color:  #536ce6; color: white;">Email</th>
+                        <th style="background-color:  #536ce6; color: white;">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <h2>User List</h2>
+                    {% if page_obj %}
+                        {% for user in page_obj %}
+                        <tr>
+                            <td style="text-align: center;font: Bold;">{{ user.username }}</td>
+                            <td style="text-align: center;font: Bold;">{{ user.email }}</td>
+                            <td style="text-align: center;font: Bold;">{{ user.role }}</td> <!-- Ensure 'role' is a field in your User model -->
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+    </script>
+    {% if alert_message %}
+        <script>
+            alert("{{ alert_message }}");
+            window.location.href = "/login/";  // Redirect to login after showing the alert
+        </script>
+    {% endif %}
+</body>
+</html>

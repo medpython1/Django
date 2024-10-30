@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quatattion list</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #536ce6;
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h1 {
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            display: block;
+        }
+/*on corser move*/
+        .sidebar a:hover {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        /*
+
+        /* Main content area */
+        .main-content {
+            flex-grow: 1;
+            background-color: white;
+            padding: 40px;
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            background-color:white;
+            color: black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+        .styled-table {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px; /* Padding won't work on <table>, so apply it inside cells */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        border-collapse: separate;
+        border-spacing: 0; /* Ensures borders don't collapse, works well with rounded corners */
+        
+        
+    }
+    
+    .styled-table th, .styled-table td {
+        padding: 12px; /* This adds space inside table cells */
+        text-align: center;
+        border-bottom: 1px solid white;
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .styled-table th {
+        font-weight: bold;
+        background-color: #536ce6;;
+        color: white;
+    }
+
+    .styled-table tr:last-child td {
+        border-bottom: none; /* Removes bottom border for the last row */
+    }
+
+    .styled-table {
+        border-radius: 8px;
+        overflow: hidden; /* Ensures border-radius affects entire table */
+    }
+    /* Alert Message with Time code in */
+.alert-box {
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;  /* Smooth fade-out */
+  animation: fadeout 1s forwards;     /* Start fade-out after 5 seconds */
+}
+
+/* CSS animation to fade out */
+@keyframes fadeout {
+  0% { opacity: 1; }
+  80% { opacity: 1; }  /* Stay visible for most of the duration */
+  100% { opacity: 0; } /* Fade out completely by the end */
+}
+.styled-table-shortcut {
+        
+       background-color: #536ce6;;
+        border-radius: 15px;
+        padding: 22px; /* Padding won't work on <table>, so apply it inside cells */
+        box-shadow: 0 2px 5px rgba(252, 250, 250, 0.952);
+        margin-bottom: 20px;
+        border-collapse: separate;
+        border-spacing: 0; /* Ensures borders don't collapse, works well with rounded corners */
+        color: white
+        
+        
+        
+    } 
+.container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the table to the right */
+    margin-top: 20px;   
+}
+a {
+        color: white;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .pagination a {
+        padding: 8px 16px;
+        margin: 0 5px;
+        text-decoration: none;
+        background-color: #536ce6;
+        color: white;
+        border-radius: 5px;
+    }
+    .pagination .current {
+        padding: 8px 16px;
+        margin: 0 5px;
+        background-color: #536ce6;
+        color: white;
+        border-radius: 5px;
+    }
+    input[type="date"] {
+            font-size: 16px;  /* Increase text size */
+            padding: 10px;    /* Increase padding for larger field */
+            width: 200px;     /* Set a wider field */
+            border-radius: 5px;  /* Add rounded corners */
+            border: 1px solid white; /* Add a border */
+            background-color:  #f0f0f0; /* Light background color */
+            color: #333;      /* Text color */
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Dashboard</h1>
+        <h3><a href="http://127.0.0.1:8000/dashboard/">Home</a></h3>
+        <h3><a href="http://127.0.0.1:8000/vendor_list/">Add Vendor</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate/">Bill Generate</a></h3>
+        <h3><a href="http://127.0.0.1:8000/get_bill_list/">Bill List</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate_qua/" >Quatation</a></h3>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <div class="navbar">
+            <h1>Quatation List</h1>
+        </div>
+
+        
+        <div class="container">
+        <table class="styled-table-shortcut">
+            <tr>
+                <th style="width: 40%;">
+                    <a href="http://127.0.0.1:8000/bill_generate_qua/" >Generate Quatation</a>
+                    </a></th>
+            </tr></table></div>
+        
+        <form method="POST" action="">
+            <table>
+                {% csrf_token %}
+                <tr>
+                    <tr>
+                        <td  style="color: #536ce6">
+                         select dates
+                        </td>
+                    </tr>
+                    <tr>
+                       <td>
+                        <!-- <label for="from_date" style="background-color: #007BFF">From Date:</label> -->
+                        <input type="date" name="from_date" required>
+                       </td>
+                    
+                     <td>
+                        <label for="to_date" style="background-color: #536ce6;color: white; padding: 10px 20px; border: none; border-radius: 5px;">To</label>
+                        <input type="date" name="to_date" required>
+                     </td>
+                      <td>
+                        <div >
+                            <button type="submit" name="get_bill_list_qua"  style="font-size: 18px; background-color: #536ce6; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Search</button>
+                           </div>
+                        
+                       </td>
+                    </tr>
+            </table>
+            <div class="container">
+                <table class="styled-table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Invoice Number</th>
+                            <th>Company Name</th>
+                            <th>Before Tax Amount</th>
+                            <th>TAX SGST</th>
+                            <th>TAX CGST</th>
+                            <th>Total Amount</th>
+                            <th>PDF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if page_obj %}
+                            {% for bill in page_obj %}
+                                <tr>
+                                    <td>{{ bill.bill_id }}</td>
+                                    <td>{{ bill.company_name }}</td>
+                                    <td>{{ bill.total_amount }}</td>
+                                    <td>{{ bill.sgst }}</td>
+                                    <td>{{ bill.cgst }}</td>
+                                    <td>{{ bill.total_amount_after_tax }}</td>
+                                    <td><a href="{{ bill.file_path }}" target="_blank" style="color: #40a0ee;">PDF</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7">No bills found for the selected date range.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <script type="text/javascript">
+                window.history.forward();
+                function noBack() {
+                    window.history.forward();
+                }
+            </script>
+            <!-- Pagination -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+    
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+    
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        
+    </body>
+    </html>
+    
+    

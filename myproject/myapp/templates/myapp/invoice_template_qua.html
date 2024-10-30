@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quatation PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .tax_invoice_heading {
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="tax_invoice_heading"><h1>INVOICE</h1></div>
+    <table >
+        <tr>
+            <td style="text-align: center;">
+           <h1 ><B> QUATATION</td></B></h1>
+        </tr>
+    </table>
+    
+   
+
+    <table border-collapse: collapse;><tr >
+               <td style="width: 40%;text-align: left;"> 
+                <p><storng>SHIPER:</storng></p>
+                <p><storng><b>SRI LAXMI BHAVANI ENTERPRISES</p></b></storng>
+                <p>FLAT NO:80/1/1/1
+                GADDA POTHARAM(V),JINNARAM(M),SANGAREDDY(D),
+                TELANGANA-502319
+                Mobile No:9949532129</p>
+                <p><strong>GST:</strong>36HLGPS7500M1Z</p>
+                </td>
+                <td style="width: 40%;text-align: left;" >
+                    <p><storng>RECIVER:</storng></p>
+                    <p><b><storng>{{ company_name }}</p></b></storng>
+                    <p>{{ billing_address }}
+                    {{city}}
+                    {{state}}
+                    {{pincode}}</p>
+                    <p><strong>GST:</strong>{{gst_number}}</p>
+                </td>
+                <td style="width: 20%;text-align: left;">
+                    <strong> QUA NO:{{ invoice_number }}
+                    <br>Date:{{qua_date}}</br></strong>
+            </tr>
+
+        </table>
+   
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width:40%;text-align: center;">Decription</th>
+                <th style="width:15%;text-align: center;">Quantity</th>
+                <th style="width:15%;text-align: center;">UOM</th>
+                <th style="width:15%;text-align: center;">Rate</th>
+                <th style="width:15%;text-align: center;">Amount</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td style="width:40%">{{ product.product_name }}</td>
+                <td style="width:15%">{{ product.Quantity }}</td>
+                <td style="width:15%">{{ product.UOM_data }}</td>
+                <td style="width:15%">{{ product.price }}</td>
+                <td style="width:15%">{{ product.Amount }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table border-collapse: collapse;>
+        <tr>
+            <td style="width:25%;border: none;"><h5>TAXABLE AMOUNT: {{ total_amount }}</h5></td>
+            <td style="width:15%;border: none;"><h5>SGST 9%: {{ sgst }}</h5></td>
+            <td style="width:15%;border: none;"><h5>CGST 9%: {{ cgst }}</h5></td>
+            <td style="width:15%;border: none;"><h5>IGST 18%:{{  igst }}</h5></td>
+            <td style="width:30%;border: none;"><h5>Total Amount After Tax: {{ total_amount_after_tax }}</h5></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <strong>In words:</strong> {{ word_data }}
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td >
+                <p>THANK YOU FOR YOUR BUSINESS!</p>
+                <p>Signature / Stamp: </p>
+                <p>Place:
+                    Date:
+                </p>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vendor_list</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #536ce6;
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            text-align: center;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            display: block;
+        }
+/*on corser move*/
+        .sidebar a:hover {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        /*
+
+        /* Main content area */
+        .main-content {
+            flex-grow: 1;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+        .styled-table {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px; /* Padding won't work on <table>, so apply it inside cells */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+        border-collapse: separate;
+        border-spacing: 0; /* Ensures borders don't collapse, works well with rounded corners */
+        
+        
+    }
+    
+    .styled-table th, .styled-table td {
+        padding: 10px; /* This adds space inside table cells */
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .styled-table th {
+        font-weight: bold;
+        background-color: #536ce6;
+        color: #fff;
+    }
+
+    .styled-table tr:last-child td {
+        border-bottom: none; /* Removes bottom border for the last row */
+    }
+
+    .styled-table {
+        border-radius: 8px;
+        overflow: hidden; /* Ensures border-radius affects entire table */
+    }
+    /* Alert Message with Time code in */
+.alert-box {
+  padding: 15px;
+  background-color: #28a745;
+  color: #f3eded;
+  border-radius: 5px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;  /* Smooth fade-out */
+  animation: fadeout 1s forwards;     /* Start fade-out after 5 seconds */
+}
+
+/* CSS animation to fade out */
+@keyframes fadeout {
+  0% { opacity: 1; }
+  80% { opacity: 1; }  /* Stay visible for most of the duration */
+  100% { opacity: 0; } /* Fade out completely by the end */
+}
+.styled-table-shortcut {
+        
+       background-color: #536ce6;;
+        border-radius: 15px;
+        padding: 22px; /* Padding won't work on <table>, so apply it inside cells */
+        box-shadow: 0 2px 5px rgba(252, 250, 250, 0.952);
+        margin-bottom: 20px;
+        border-collapse: separate;
+        border-spacing: 0; /* Ensures borders don't collapse, works well with rounded corners */
+        color: #f3eded;
+        
+        
+        
+    } 
+.container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the table to the right */
+    margin-top: 20px;   
+}
+a {
+        color: #f3eded;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .pagination a {
+        padding: 8px 16px;
+        margin: 0 5px;
+        text-decoration: none;
+        background-color: #536ce6;
+        color: white;
+        border-radius: 5px;
+    }
+    .pagination .current {
+        padding: 8px 16px;
+        margin: 0 5px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+    }
+    
+    </style>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Dashboard</h1>
+        <h3><a href="http://127.0.0.1:8000/dashboard/">Home</a></h3>
+        <h3><a href="http://127.0.0.1:8000/vendor_list/">Add Vendor</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate/">Bill Generate</a></h3>
+        <h3><a href="http://127.0.0.1:8000/get_bill_list/">Bill List</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate_qua/" >Quatation</a></h3>
+        <h3><a href="http://127.0.0.1:8000/register/" >User</a></h3>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="main-content">
+            <div style="text-align: right;">
+                <form method="POST" action="{% url 'logout' %}" style="margin-top: 20px;">
+                    {% csrf_token %}
+                    <button type="submit" style="background-color: #536ce6; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; ">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        <div class="container">
+            
+            <table class="styled-table-shortcut">
+                <tr>
+                    <th style="width: 40%;">
+                        <a href="http://127.0.0.1:8000/vendor_master/" >Add Vendor</a>
+                        </a></th>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- Navbar -->
+        <div class="navbar">
+            <h1>Vendor List</h1>
+        </div>
+
+        <form method="POST" action="{% url 'vendor_list' %}">
+        
+                {% if page_obj %}
+                {% csrf_token %}
+                
+            
+                <table class="styled-table" style="width: 100%;" style="height: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Company Address</th>
+                            <th>GST</th>
+                            <th>Phone Number</th>
+                            <th>Status</th> <!-- Add Status Column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in page_obj %}
+                        <tr>
+                            <td>{{ book.company_name }}</td>
+                            <td>{{ book.company_address }}</td>
+                            <td>{{ book.gst }}</td>
+                            <td>{{ book.phone_number }}</td>
+                            <td>
+                                <button class="toggle-status btn {% if book.status == 'A' %}btn-danger{% else %}btn-success{% endif %}" 
+                                        data-id="{{ book.id }}" 
+                                        data-status="{{ book.status }}">
+                                    {% if book.status == 'A' %}
+                                        Set Inactive
+                                    {% else %}
+                                        Set Active
+                                    {% endif %}
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            
+            {% else %}
+                <p>No Users found with this ID Number.</p>
+            {% endif %}
+        </form>
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+    </script>
+    <script>
+        document.querySelectorAll('.toggle-status').forEach(button => {
+            button.addEventListener('click', function() {
+                const vendorId = this.dataset.id;
+                const currentStatus = this.dataset.status;
+    
+                fetch(`/vendors/toggle/${vendorId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token
+                    },
+                    body: JSON.stringify({ status: currentStatus })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.new_status) {
+                        this.textContent = data.new_status === 'Inactive' ? 'Set Active' : 'Set Inactive';
+                        this.classList.toggle('btn-danger');
+                        this.classList.toggle('btn-success');
+                        this.dataset.status = data.new_status;  // Update the data-status attribute
+                    } else {
+                        alert('Error updating status: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+    
+    </body>
+    </html>
+    
+    

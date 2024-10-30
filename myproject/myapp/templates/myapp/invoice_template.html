@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice PDF|SLBE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .tax_invoice_heading {
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="tax_invoice_heading"><h1>INVOICE</h1></div>
+    <table >
+        <tr>
+            <td style="text-align: center;">
+           <h1 ><B> TAX INVOICE</td></B></h1>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="width: 50%;">
+                <p>SRI LAXMI BHAVANI ENTERPRISES<br>
+                   FLAT NO:80/1/1/1<br>
+                   GADDA POTHARAM(V),JINNARAM(M),SANGAREDDY(D),<br>
+                   TELANGANA-502319<br>
+                   GSTIN: 36HLGPS7500M1ZI<br>
+                   Mobile No:9949532129
+                </p>
+            </td>
+            <td style="width: 20%;">
+                <br>Invoice: {{ invoice_number }}</br>
+                <br>Date:{{bill_date}}</br>
+            </td>
+            <td style="width: 30%;">
+                <p>
+                 Vehicle Number:{{ vechine_number }}<br>
+                 EWAY:{{eway_number}}<br>
+                 PO NUMBER:{{purchase_number}}<br>
+                 PO DATE:{{purchase_date}}<br>
+                </p>
+            </td>
+       </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="width: 50%;text-align: center;">
+            <h3>BILLING ADDRESS</h3>
+            </td>
+            <td style="width: 50%;text-align: center;"><h3>SHIPING ADDRESS</h3></td>
+        </tr>
+    </table>
+
+    <table><tr>
+               <td> <p>{{ company_name }}</p>
+                    <p>{{ billing_address }}</p>
+                    <p><strong>GST:</strong>{{ gst_number }}</p>
+                </td>
+                <td>
+                    <p>{{ company_name }}</p>
+                    <p>{{ billing_address }}</p>
+                    <p><strong>GST:</strong> {{ gst_number }}</p>
+                </td>
+            </tr>
+
+        </table>
+   
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width:40%;text-align: center;">Decription</th>
+                <th style="width:15%;text-align: center;">HSN/SAC</th>
+                <th style="width:10%;text-align: center;">Quantity</th>
+                <th style="width:10%;text-align: center;">UOM</th>
+                <th style="width:10%;text-align: center;">Rate</th>
+                <th style="width:15%;text-align: center;">Amount</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td style="width:40%">{{ product.product_name }}</td>
+                <td style="width:15%">{{ product.Hsn }}</td>
+                <td style="width:10%">{{ product.Quantity }}</td>
+                <td style="width:10%">{{ product.UOM_data }}</td>
+                <td style="width:10%">{{ product.price }}</td>
+                <td style="width:15%">{{ product.Amount }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table>
+        <tr>
+            <td style="width:25%"><h5>TAXABLE AMOUNT: {{ total_amount }}</h5></td>
+            <td style="width:15%"><h5>SGST 9%: {{ sgst }}</h5></td>
+            <td style="width:15%"><h5>CGST 9%: {{ cgst }}</h5></td>
+            <td style="width:15%"><h5>IGST 18%:{{  igst }}</h5></td>
+            <td style="width:30%"><h5>Total Amount After Tax: {{ total_amount_after_tax }}</h5></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <strong>In words:</strong> {{ word_data }}
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td >
+                <p>Bank Details:-</p>
+                <p>Name: SRI LAXMI BHAVANI ENTERPRISES 
+                    IFSC CODE : SBIN0018331
+                    AC NO : 40934354869
+                    BANK & BRANCH: SBI / SURARAM
+                </p>
+            </td>
+            <td>
+                <div class="qr-code">
+                    {% if qr_code_url %}
+                        <img src="{{ qr_code_url }}" alt="QR Code" style="width: 100px; height: 100px;">
+                    {% else %}
+                        <p>No QR code available.</p>
+                    {% endif %}
+                </div>
+            </td>
+            <td>
+                For : SRI LAXMI BHAVANI ENTERPRISES
+
+
+
+
+                Authorised Signatory
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

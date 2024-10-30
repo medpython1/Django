@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex; /* Use Flexbox for layout */
+            height: 100vh; /* Full height of the viewport */
+            margin: 0; /* Remove default margin */
+        }
+        .split {
+            flex: 1; /* Each .split takes equal space */
+            display: flex; /* Enable flex for inner centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            flex-direction: column; /* Stack items vertically */
+        }
+        .left {
+            background-color: white; /* Optional background color */
+            text-align: center; /* Center text */
+        }
+        .right {
+            background-color: white; /* Optional background color */
+        }
+        .centered {
+            text-align: center; /* Center text in the form */
+        }
+        img {
+            max-width: 100%; /* Make the image responsive */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .styled-table {
+        background-color: #536ce6;
+        border-radius: 8px;
+        
+        padding: 140px; /* Padding won't work on <table>, so apply it inside cells */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 60px;
+        border-collapse: separate;
+        border-spacing: 0; /* Ensures borders don't collapse, works well with rounded corners */
+        
+        
+    }
+    
+    .styled-table th, .styled-table td {
+        padding: 30px; /* This adds space inside table cells */
+        text-align: left;
+        /* border-bottom: 20px solid #ddd; */
+    }
+
+    .styled-table th {
+        font-weight: bold;
+        font-size: medium;
+    }
+
+    .styled-table tr:last-child td {
+        border-bottom: none; /* Removes bottom border for the last row */
+    }
+
+    .styled-table {
+        border-radius: 8px;
+        overflow: hidden; /* Ensures border-radius affects entire table */
+    }
+    input[type="password"] {
+    width: calc(130% - 10px); /* Make input take full width minus padding */
+    height: 60px; /* Increase height of the input field */
+    padding: 10px; /* Add padding inside the input field */
+    font-size: 16px; /* Increase font size */
+    border: 1px solid #ccc; /* Optional: border styling */
+    border-radius: 4px; /* Optional: border radius for rounded corners */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+input[type="text"] {
+    width: calc(130% - 10px); /* Make input take full width minus padding */
+    height: 60px; /* Increase height of the input field */
+    padding: 10px; /* Add padding inside the input field */
+    font-size: 16px; /* Increase font size */
+    border: 1px solid #ccc; /* Optional: border styling */
+    border-radius: 4px; /* Optional: border radius for rounded corners */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+    </style>
+</head>
+<body>
+
+    <div class="split left">
+        <img src="http://127.0.0.1:8000/static/myapp/images/loginpage2.jpg" alt="Avatar man">
+    </div>
+    
+    <div class="split right">
+        <div class="centered">
+            <form method="POST" class="login_view">
+                {% csrf_token %}
+                <table class="styled-table">
+                    <tr>
+                        <td style="text-align: center; color: white;font-size: 24px; font-weight: bold;">Login Page</td>
+                    </tr>
+                    <tr>
+                        <td ><input type="text" name="name" placeholder="Username"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="password" name="password" placeholder="Password"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="text-align: left;">
+                                <button type="submit" name="login_view" style="font-size: 18px; background-color: white; color: black; padding: 10px 20px; border: none; border-radius: 5px;">SIGN IN</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

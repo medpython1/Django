@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #536ce6;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 20px 0;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+
+        .styled-table {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-spacing: 0;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+
+        .styled-table th, .styled-table td {
+            padding: 12px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .styled-table th {
+            background-color: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .styled-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .alert-box {
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+            animation: fadeout 5s forwards;
+        }
+
+        @keyframes fadeout {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .form-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="submit"] {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #536ce6;
+        }
+        .container {
+            display: flex;
+            justify-content: flex-start; /* Aligns the table to the right */
+            margin-top: 0px;
+            margin-bottom: 10px;   
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h1>Dashboard</h1>
+        <h3><a href="http://127.0.0.1:8000/dashboard/">Home</a></h3>
+        <h3><a href="http://127.0.0.1:8000/vendor_list/">Add Vendor</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate/">Bill Generate</a></h3>
+        <h3><a href="http://127.0.0.1:8000/get_bill_list/">Bill List</a></h3>
+        <h3><a href="http://127.0.0.1:8000/bill_generate_qua/" >Quatation</a></h3>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Navbar -->
+        <div class="navbar">
+            <h1 >Generate Bill</h1>
+        </div>
+
+        <!-- Search Form -->
+        <form method="POST" class="search-box">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="container">
+             <button type="submit" name="search_unit_form" style="background-color:#536ce6; color: white; padding: 15px; border-radius: 8px;" >Search</button>
+            </div>
+        </form>
+
+
+        <!-- Display Search Results -->
+        {% if books %}
+        <div class="results">
+            <h2>Search Results:</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <select name="selected_unit" onchange="this.form.submit()">
+                    <option value="">-- Select a Unit --</option>
+                    {% for unit in books %}
+                        <option value="{{ unit.company_name }}">{{ unit.company_name }} (ID: {{ unit.company_address }})</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        {% endif %}
+        
+        <form method="POST" class="add-unit-form">
+            {% csrf_token %}
+            
+        
+            <table class="styled-table">
+                <tr>
+                    <th><label for="company_name">Company Name:</label></th>
+                    <td>
+                        <input type="text" name="company_name" value="{% if selected_unit %}{{ selected_unit.company_name }}{% endif %}" required>
+                    </td>
+                    <th><label for="billing_address">Billing Address:</label></th>
+                    <td>
+                        <input type="text" name="billing_address" value="{% if selected_unit %}{{ selected_unit.company_address }}{% endif %}" required>
+                    </td>
+                    <th><label for="shipping_address">Shipping Address:</label></th>
+                    <td>
+                        <input type="text" name="shipping_address" value="{% if selected_unit %}{{ selected_unit.company_address }}{% endif %}" required>
+                    </td>
+                </tr>
+                
+                
+                <tr>
+                    <th><label for="eway_number">Eway Number:</label></th>
+                    <td>
+                        <input type="text" name="eway_number">
+                    </td>
+                    <th><label for="purchase_number">PO Number:</label></th>
+                    <td>
+                        <input type="text" name="purchase_number" required>
+                    </td>
+                    <th><label for="purchase_date">PO Date:</label></th>
+                    <td>
+                        <input type="date" name="purchase_date" required>
+                    </td>
+                    <th>
+                        <label for="pincode">Pincode:</label>
+                    </th>
+                    <td>
+                        <input type="number" name="state" value="{% if selected_unit %}{{ selected_unit.pincode }}{% endif %}" required>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <th>
+                        <label for="gst_number">GST:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="gst_number" value="{% if selected_unit %}{{ selected_unit.gst }}{% endif %}" required>
+                    </td>
+                    <th>
+                        <label for="City">City:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="city" value="{% if selected_unit %}{{ selected_unit.city }}{% endif %}" required>
+                    </td>
+                    <th>
+                        <label for="state">State:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="state" value="{% if selected_unit %}{{ selected_unit.state }}{% endif %}" required>
+                    </td>
+                   
+
+                    <th>
+                        <label for="vechine_number">Vechile Number:</label>
+                    </th>
+                    <td><input type="text" name="vechine_number"></td>
+                </tr>
+               
+            </table>
+            <div style="text-align: right;">
+                <button type="button" id="addRowButton" style="font-size: 18px; background-color: #536ce6; color: white; padding: 10px 20px; border: none; border-radius: 5px;"> &#10009;</button>
+            </div>
+            
+            <table class="styled-table" id="productTable">
+                <thead>
+                    <tr>
+                        <th><label for="product_name">Product:</label></th>
+                        <th><label for="Hsn">HSN:</label></th>
+                        <th><label for="Quantity">Quantity:</label></th>
+                        <th><label for="UOM_data">UOM:</label></th>
+                        <th><label for="price">Price:</label></th>
+                        <th>Total Amount:</th>
+                    </tr>
+                </thead>
+                <tbody id="productRows">
+                    <!-- <tr>
+                        <td><input type="text" name="product_name[]" required></td>
+                        <td><input type="text" name="Hsn[]" required></td>
+                        
+                        <td><input type="number" name="Quantity[]" class="quantity" step="any"required></td>
+                        <td><input type="text" name="UOM_data[]" required></td>
+                        <td><input type="number" namee="price[]" class="price" step="any" required></td>
+                        <td><input type="number" class="totalAmount" readonly></td>
+                    </tr> -->
+                    <tr>
+                        <td><input type="text" name="product_name[]" required></td>
+                        <td><input type="text" name="Hsn[]" required></td>
+                        <!-- <td><input type="number" class="quantity" step="any" required></td> -->
+                        <td><input type="number" name="Quantity[]" class="quantity" step="any" required></td>
+                        <td><input type="text" name="UOM_data[]" required></td>
+                        <td><input type="number" name="price[]" class="price" step="any" required></td> <!-- fixed typo here -->
+                        <td>
+                            <input type="number" class="totalAmount" readonly>
+                            <input type="hidden" name="totalAmount[]" class="hiddenTotalAmount"> <!-- hidden field for storing the value -->
+                        </td>
+                        
+                    </tr>
+                    
+                </tbody>
+            <table class="styled-table">
+                <tr>
+                    <td>
+                        <label>Select GST Type:</label><br></td>
+                        <td><input type="radio" id="sgst_cgst" name="gst_type" value="SGST_CGST" required>
+                        <label for="sgst_cgst">SGST/CGST (9% each)</label><br></td>
+                        
+                        <td><input type="radio" id="igst" name="gst_type" value="IGST" required>
+                        <label for="igst">IGST (18%)</label><br></td>
+                </tr>
+            </table>
+            </table>
+            <table class="styled-table">
+             <td style="background-color:  #536ce6; color: white;">Before Tax: <span id="totalPrice">0.00</span></td>
+             <td style="background-color: #536ce6; color: white;">SGST: <span id="GST_CGST">0.00</span></td>
+             <td style="background-color: #536ce6; color: white;">CGST: <span id="GST_SGST">0.00</span></td>
+             <td style="background-color: #536ce6; color: white;">IGST: <span id="GST_IGST">0.00</span></td>
+             <td style="background-color: #536ce6; color: white;">After Tax Amount: <span id="Total_amount_tax">0.00</span></td>
+            </table>
+            <input type="hidden" id="totalAmountInput" name="totalAmountInput">
+            <input type="hidden" id="sgstInput" name="sgstInput">
+            <input type="hidden" id="cgstInput" name="cgstInput">
+            <input type="hidden" id="igstInput" name="igstInput">
+            <input type="hidden" id="totalAmountAfterTaxInput" name="totalAmountAfterTaxInput">
+            <div style="text-align: right;">
+             <button type="submit" name="bill_generate"  style="font-size: 18px; background-color: #536ce6; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Generate Bill</button>
+            </div>
+
+        </form>
+        
+        
+
+        <!-- <script>
+            // Function to update the total price and GST
+            function updateTotal() {
+                let totalPrice = 0;
+                const rows = document.querySelectorAll('#productRows tr');
+        
+                rows.forEach(row => {
+                    const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+                    const price = parseFloat(row.querySelector('.price').value) || 0;
+                    const totalAmount = quantity * price;
+        
+                    row.querySelector('.totalAmount').value = totalAmount.toFixed(2);
+                    totalPrice += totalAmount;
+                });
+        
+                // Calculate GST
+                const gstValue = totalPrice * (9 / 100);
+                const SGST = gstValue.toFixed(2);
+                const cgst_tax = totalPrice * (9 / 100);
+                const cgst = cgst_tax.toFixed(2);
+        
+                const total_amount_after_tax = totalPrice + parseFloat(SGST) + parseFloat(cgst);
+        
+                // Update totals in the DOM
+                document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+                document.getElementById("GST_DUM").textContent = SGST;
+                document.getElementById("GST_CGST").textContent = cgst;
+                document.getElementById("Total_amount_tax").textContent = total_amount_after_tax.toFixed(2);
+                
+                document.getElementById("totalAmountInput").value = totalPrice.toFixed(2);
+                document.getElementById("sgstInput").value = SGST;
+                document.getElementById("cgstInput").value = cgst;
+                document.getElementById("totalAmountAfterTaxInput").value = total_amount_after_tax.toFixed(2);
+            }
+        
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add row when the Add More Product button is clicked
+                document.getElementById('addRowButton').addEventListener('click', function() {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="product_name[]" required></td>
+                        <td><input type="text" name="Hsn[]" required></td>
+                        <td><input type="number" class="quantity" step="any" required></td>
+                        <td><input type="text" name="UOM_data[]" required></td>
+                        <td><input type="number" class="price" step="any" required></td>
+                        <td><input type="number" class="totalAmount" readonly></td>
+                        <td><button type="button" class="deleteRowButton" style="background-color: red; color: white; padding: 5px 10px; border: none; border-radius: 5px;">&#9866;</button></td>
+                    `;
+                    document.getElementById('productRows').appendChild(newRow);
+        
+                    // Add event listeners to the new row's inputs for updating totals
+                    newRow.querySelector('.quantity').addEventListener('input', updateTotal);
+                    newRow.querySelector('.price').addEventListener('input', updateTotal);
+        
+                    // Add event listener to delete the row
+                    newRow.querySelector('.deleteRowButton').addEventListener('click', function() {
+                        newRow.remove(); // This will remove the row from the table
+                        updateTotal(); // Recalculate totals after row deletion
+                    });
+                });
+        
+                // Update total for any existing rows (if there are initial rows)
+                document.querySelectorAll('.quantity, .price').forEach(input => {
+                    input.addEventListener('input', updateTotal);
+                });
+            });
+        </script> -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Automatically add event listeners to all quantity and price input fields
+                const quantityInputs = document.querySelectorAll('.quantity');
+                const priceInputs = document.querySelectorAll('.price');
+
+                // Attach event listeners to update total when quantity or price changes
+                quantityInputs.forEach(input => {
+                    input.addEventListener('input', updateTotal);
+                });
+
+                priceInputs.forEach(input => {
+                    input.addEventListener('input', updateTotal);
+                });
+
+                // Attach event listener to GST type radio buttons
+                const gstRadioButtons = document.querySelectorAll('input[name="gst_type"]');
+                gstRadioButtons.forEach(radio => {
+                    radio.addEventListener('change', updateTotal);
+                });
+
+                // Initial calculation on page load
+                updateTotal();
+            });
+
+            function updateTotal() {
+                let totalPrice = 0;
+
+                const rows = document.querySelectorAll('#productRows tr');
+
+                rows.forEach(row => {
+                    const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+                    const price = parseFloat(row.querySelector('.price').value) || 0;
+                    const totalAmount = quantity * price;
+
+                    row.querySelector('.totalAmount').value = totalAmount.toFixed(2);
+                    const hiddenInput = row.querySelector('.hiddenTotalAmount');
+                    if (hiddenInput) {
+                        hiddenInput.value = totalAmount.toFixed(2);
+                    }
+                    totalPrice += totalAmount;
+                });
+
+                // Calculate GST based on the selected type
+                const gstType = document.querySelector('input[name="gst_type"]:checked').value;
+                let SGST = 0, CGST = 0, IGST = 0;
+                let totalAmountAfterTax = 0;
+
+                if (gstType === 'SGST_CGST') {
+                    const gstValue = totalPrice * (9 / 100);
+                    SGST = gstValue.toFixed(2);
+                    CGST = gstValue.toFixed(2);
+                    totalAmountAfterTax = totalPrice + parseFloat(SGST) + parseFloat(CGST);
+                } else if (gstType === 'IGST') {
+                    const igstValue = totalPrice * (18 / 100);
+                    IGST = igstValue.toFixed(2);
+                    totalAmountAfterTax = totalPrice + parseFloat(IGST);
+                }
+
+                // Update the values in the frontend
+                document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+
+                if (gstType === 'SGST_CGST') {
+                    document.getElementById('GST_SGST').textContent = SGST;
+                    document.getElementById('GST_CGST').textContent = CGST;
+                    document.getElementById('GST_IGST').textContent = "0.00"; // Clear IGST field
+                } else if (gstType === 'IGST') {
+                    document.getElementById('GST_SGST').textContent = "0.00"; // Clear SGST field
+                    document.getElementById('GST_CGST').textContent = "0.00"; // Clear CGST field
+                    document.getElementById('GST_IGST').textContent = IGST;
+                }
+
+                document.getElementById('Total_amount_tax').textContent = totalAmountAfterTax.toFixed(2);
+
+                // Store values in hidden fields to be submitted with the form
+                document.getElementById('totalAmountInput').value = totalPrice.toFixed(2);
+                document.getElementById('sgstInput').value = SGST;
+                document.getElementById('cgstInput').value = CGST;
+                document.getElementById('igstInput').value = IGST;
+                document.getElementById('totalAmountAfterTaxInput').value = totalAmountAfterTax.toFixed(2);
+            }
+
+
+                
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('addRowButton').addEventListener('click', function() {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="product_name[]" required></td>
+                        <td><input type="text" name="Hsn[]" required></td>
+                        <td><input type="number" name="Quantity[]" class="quantity" step="any" required></td>
+                        <td><input type="text" name="UOM_data[]" required></td>
+                        <td><input type="number" name="price[]" class="price" step="any" required></td>
+                        <td>
+                            <input type="number" class="totalAmount" readonly>
+                            <input type="hidden" name="totalAmount[]" class="hiddenTotalAmount">
+                        </td>
+                        <td><button type="button" class="deleteRowButton" style="background-color: red; color: white; padding: 5px 10px; border: none; border-radius: 5px;">&#9866;</button></td>
+                    `;
+                    document.getElementById('productRows').appendChild(newRow);
+    
+                    newRow.querySelector('.quantity').addEventListener('input', updateTotal);
+                    newRow.querySelector('.price').addEventListener('input', updateTotal);
+    
+                    newRow.querySelector('.deleteRowButton').addEventListener('click', function() {
+                        newRow.remove();
+                        updateTotal();
+                    });
+                });
+    
+                document.querySelectorAll('.quantity, .price').forEach(input => {
+                    input.addEventListener('input', updateTotal);
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            window.history.forward();
+            function noBack() {
+                window.history.forward();
+            }
+        </script>
+        
+        {% if messages %}
+    <div class="alert-box alert-success">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
