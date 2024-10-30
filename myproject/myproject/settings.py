@@ -55,13 +55,11 @@ connect(
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',  # or use mongoengine as an alternative
-        'NAME': 'your_database_name',
+        'ENGINE': 'djongo',  # Or 'django.db.backends.dummy' if using MongoEngine
+        'NAME': 'myDatabase',
         'CLIENT': {
-            'host': 'mongodb://54.82.35.93:27017',
-            'username': 'root',
-            'password': 1234,
-            'authSource': 'admin',  # or specific database name for authentication
+            'host': 'mongodb://root:root1234@54.82.35.93:27017/',
+            'authMechanism': 'SCRAM-SHA-256'  # Optional: depends on your MongoDB setup
         }
     }
 }
