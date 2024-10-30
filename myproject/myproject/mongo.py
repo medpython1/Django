@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 MONGODB_DATABASES = {
     'default': {
         'name': 'mydatabase',  # Replace with your actual database name
-        'host': 'localhost',      # MongoDB host
+        'host': '54.82.35.93',      # MongoDB host
         'port': 27017,            # Default MongoDB port
-        # Uncomment if using authentication
-        # 'username': 'your_username',
-        # 'password': 'your_password',
+        
+        'username': 'root',
+        'password': '123456',
     }
 }
 
