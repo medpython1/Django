@@ -38,10 +38,10 @@ client = MongoClient("mongodb://mongo:27017/mydatabase")
 
 connect(
     db="mydatabase",    # The name of your database
-    host="localhost",            # MongoDB server host
+    host="54.82.35.93",            # MongoDB server host
     port=27017,                  # MongoDB server port (default is 27017)
-    # username="your_username",    # Optional: If using authentication, provide the username
-    # password="your_password",    # Optional: If using authentication, provide the password
+    username="root",    # Optional: If using authentication, provide the username
+    password="123456",    # Optional: If using authentication, provide the password
     authentication_source="admin",  # Optional: If using authentication, set the auth source
 )
 DATABASES = {
