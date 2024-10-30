@@ -44,12 +44,24 @@ connect(
     password="123456",    # Optional: If using authentication, provide the password
     authentication_source="admin",  # Optional: If using authentication, set the auth source
 )
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',                           # Use Djongo as the database engine
+#         'NAME': 'mydatabase',                         # The same database name as MongoEngine
+#         'CLIENT': {
+#             'host': 'mongodb://localhost:27017/',    # Ensure this is correct for your setup
+#         }
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',                           # Use Djongo as the database engine
-        'NAME': 'mydatabase',                         # The same database name as MongoEngine
+        'ENGINE': 'djongo',  # or use mongoengine as an alternative
+        'NAME': 'your_database_name',
         'CLIENT': {
-            'host': 'mongodb://localhost:27017/',    # Ensure this is correct for your setup
+            'host': 'mongodb://54.82.35.93:27017',
+            'username': 'root',
+            'password': '1234',
+            'authSource': 'admin',  # or specific database name for authentication
         }
     }
 }
