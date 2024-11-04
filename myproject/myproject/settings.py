@@ -26,9 +26,8 @@ SECRET_KEY = 'django-insecure-d(&g%zx#nnk^^v%_v1ae%9+b%!t-#85cdz$v(j0ntl#wo3$^!3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ["54.82.35.93"]
+STATIC_ROOT = '/var/www/mysite/assets/'
 
 # Application definition
 from mongoengine import connect
