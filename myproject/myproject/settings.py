@@ -36,7 +36,7 @@ from pymongo import MongoClient
 client = MongoClient("mongodb://mongo:27017/mydatabase")
 
 connect(
-    db="mydatabase2",    # The name of your database
+    db="mydatabase3",    # The name of your database
     host="98.84.180.169",            # MongoDB server host
     port=27017,                  # MongoDB server port (default is 27017)
     username="root",    # Optional: If using authentication, provide the username
@@ -55,7 +55,7 @@ connect(
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',  # Or 'django.db.backends.dummy' if using MongoEngine
-        'NAME': 'myDatabase2',
+        'NAME': 'myDatabase3',
         'CLIENT': {
             'host': 'mongodb://root:root1234@98.84.180.169:27017/',
             'authMechanism': 'SCRAM-SHA-256'  # Optional: depends on your MongoDB setup
