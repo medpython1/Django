@@ -57,7 +57,7 @@ DATABASES = {
         'ENGINE': 'djongo',  # Or 'django.db.backends.dummy' if using MongoEngine
         'NAME': 'myDatabase',
         'CLIENT': {
-            'host': 'mongodb://root:root1234@54.152.136.95:27017/',
+            'host': 'mongodb://root:root1234@98.84.180.169:27017/',
             'authMechanism': 'SCRAM-SHA-256'  # Optional: depends on your MongoDB setup
         }
     }
