@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d(&g%zx#nnk^^v%_v1ae%9+b%!t-#85cdz$v(j0ntl#wo3$^!3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["54.82.35.93"]
+ALLOWED_HOSTS = ["52.91.8.216"]
 STATIC_ROOT = '/var/www/mysite/assets/'
 
 # Application definition
@@ -37,7 +37,7 @@ client = MongoClient("mongodb://mongo:27017/mydatabase")
 
 connect(
     db="mydatabase",    # The name of your database
-    host="54.82.35.93",            # MongoDB server host
+    host="98.84.180.169",            # MongoDB server host
     port=27017,                  # MongoDB server port (default is 27017)
     username="root",    # Optional: If using authentication, provide the username
     password="123456",    # Optional: If using authentication, provide the password
