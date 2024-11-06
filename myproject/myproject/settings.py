@@ -40,7 +40,7 @@ connect(
     host="98.84.180.169",            # MongoDB server host
     port=27017,                  # MongoDB server port (default is 27017)
     username="root",    # Optional: If using authentication, provide the username
-    password="123456",    # Optional: If using authentication, provide the password
+    password="root1234",    # Optional: If using authentication, provide the password
     authentication_source="admin",  # Optional: If using authentication, set the auth source
 )
 # DATABASES = {
