@@ -329,7 +329,7 @@ def bill_generate(request):
             }
             
             pdf_file_name = generate_pdf('myapp/invoice_template.html', context)
-            path_of_pdf="http://127.0.0.1:8000/view_pdf/"+pdf_file_name
+            path_of_pdf="http://52.91.8.216:8000/view_pdf/"+pdf_file_name
             bill_details_store=bill_details(sno=bill_details.objects.count()+1,
                                             company_name=company_name,
                                             bill_id=invoice_number,
@@ -526,7 +526,7 @@ def bill_generate_qua(request):
             }
             
             pdf_file_name = generate_pdf_qua('myapp/invoice_template_qua.html', context)
-            path_of_pdf="http://127.0.0.1:8000/view_pdf_qua/"+pdf_file_name
+            path_of_pdf="http://52.91.8.216:8000/view_pdf_qua/"+pdf_file_name
             bill_details_store=bill_details_qua(sno=bill_details_qua.objects.count()+1,
                                             company_name=company_name,
                                             bill_id=invoice_number,
